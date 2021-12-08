@@ -83,11 +83,24 @@ var cookiesOnly = function(desserts) {
 // return the total price of all products.
 var sumTotal = function(products) {
 
+  return _.reduce(products, function(sum, product) {
+    return sum + Number(product.price.slice(1));
+  }, 0);
+
 };
 
 // return an object consisting of dessert types and how many of each.
 // exampleOutput: { dessertType: 3, dessertType2: 1 }
 var dessertCategories = function(desserts) {
+
+  return _.reduce(desserts, function(categories, dessert) {
+    if (categories[dessert.type] === undefined) {
+      categories[dessert.type] = 0;
+    }
+    categories[dessert.type]++;
+    return categories;
+
+  }, {});
 
 };
 
@@ -96,12 +109,25 @@ var dessertCategories = function(desserts) {
 // TIP: use an array as your accumulator - don't push to an external array!
 var ninetiesKid = function(movies) {
 
+  return _.reduce(movies, function(ninetiesMovies, movie) {
+    if (movie.releaseYear >= 1990 && movie.releaseYear <= 2000) {
+      ninetiesMovies.push(movie.title);
+    }
+    return ninetiesMovies;
+  }, []);
 };
 
 // return an boolean stating if there exists a movie with a shorter
 // runtime than your time limit.
 // timeLimit is an integer representing a number of minutes.
 var movieNight = function(movies, timeLimit) {
+
+  return _.reduce(movies, function(shorterMovieExists, movie) {
+    if (shorterMovieExists) {
+      return true;
+    }
+    return movie.runtime < timeLimit;
+  }, false);
 
 };
 
